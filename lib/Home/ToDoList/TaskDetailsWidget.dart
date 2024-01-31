@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/MyTheme.dart';
+import 'package:todo_app/Models/Task.dart';
+import 'package:todo_app/Theming/MyTheme.dart';
 
 class TaskDetailsWidget extends StatelessWidget {
+  Task task;
+  TaskDetailsWidget({required this.task});
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
@@ -19,20 +22,20 @@ class TaskDetailsWidget extends StatelessWidget {
         closeOnScroll: true,
         startActionPane: ActionPane(
           extentRatio: 0.2,
-            motion: StretchMotion(),
+            motion: const StretchMotion(),
             children: [
               SlidableAction(onPressed: null,
               backgroundColor: MyTheme.redColor,
               foregroundColor: Colors.white,
               icon: Icons.delete,
               label: 'Delete',
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
               ),),
             ]),
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15)
@@ -54,14 +57,14 @@ class TaskDetailsWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Football Task Management',
+                      child: Text(task.title??'',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).primaryColor
                       ),),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Des',style: Theme.of(context).textTheme.titleMedium,),
+                      child: Text(task.description??'',style: Theme.of(context).textTheme.titleMedium,),
                     )
                   ],
                 ),
@@ -75,7 +78,7 @@ class TaskDetailsWidget extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(20)
                 ),
-                child: Icon(Icons.check,color: Colors.white,),
+                child: const Icon(Icons.check,color: Colors.white,),
               )
             ],
           )

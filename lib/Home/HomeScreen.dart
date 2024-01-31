@@ -18,9 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text('ToDo List')),
+        appBar: AppBar(title: const Text('ToDo List')),
         bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 6,
           child: BottomNavigationBar(
             onTap: (index){
@@ -29,29 +29,29 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
             currentIndex:selectedIndex ,
-            items: [
+            items: const [
               BottomNavigationBarItem(icon: Icon(Icons.list,),label: ''),
               BottomNavigationBarItem(icon: Icon(Icons.settings_outlined),label: ''),
             ],
           ),
         ),
         floatingActionButton:FloatingActionButton(
-          shape: StadiumBorder(
+          shape: const StadiumBorder(
             side: BorderSide(
               width: 4,
               color: Colors.white
             )
           ),
-            onPressed: ShowAddTaskBottomSheet,
-        child: Icon(Icons.add),),
+            onPressed: showAddTaskBottomSheet,
+        child: const Icon(Icons.add),),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body:tabs[selectedIndex] ,
       ),
     );
   }
-  void ShowAddTaskBottomSheet(){
+  void showAddTaskBottomSheet(){
     showModalBottomSheet(
         context: context,
-        builder: (context)=>AddTaskBottomSheet());
+        builder: (context)=>const AddTaskBottomSheet());
   }
 }
