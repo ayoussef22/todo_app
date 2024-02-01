@@ -15,16 +15,16 @@ class _ToDoListTabState extends State<ToDoListTab> {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<ListProvider>(context);
-    if(provider.tasksList.isEmpty){
-      provider.getTasksFromFireStore();
-    }
+      provider.refreshTasks();
     return Column(
       children: [
         CalendarTimeline(
-          initialDate: DateTime.now(),
+          initialDate: provider.selectDay,
           firstDate: DateTime.now().subtract(const Duration(days: 90)),
           lastDate: DateTime.now().add(const Duration(days: 365)),
-          onDateSelected: (date) => print(date),
+          onDateSelected: (date) {
+            provider.changeDate(date);
+          },
           leftMargin: 10,
           monthColor: Colors.black,
           dayColor: Colors.black,
@@ -41,5 +41,6 @@ class _ToDoListTabState extends State<ToDoListTab> {
       ],
     );
   }
+
 
 }

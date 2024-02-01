@@ -105,7 +105,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         Duration(seconds: 1),
         onTimeout: (){
           print('task added successfully');
-          provider.getTasksFromFireStore();
+          provider.refreshTasks();
           Navigator.pop(context);
         }
       );

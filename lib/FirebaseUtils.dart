@@ -16,4 +16,8 @@ static Future<void> addTasksToFireStore(Task task){
   task.id=documentReference.id;
   return documentReference.set(task);
 }
+
+static Future<void> deleteTask(Task task){
+  return getTaskCollection().doc(task.id).delete();
+}
 }

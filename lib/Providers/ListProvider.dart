@@ -5,13 +5,31 @@ import 'package:todo_app/Models/Task.dart';
 
 class ListProvider extends ChangeNotifier{
   List<Task> tasksList=[];
+  DateTime selectDay=DateTime.now();
 
-  void getTasksFromFireStore()async{
-    var taskCollection=FirebaseUtils.getTaskCollection();
+  void refreshTasks()async{
+    var taskCollection=FirebaseUtils.getTaskCollection()
+        .orderBy("dateTime");
     QuerySnapshot<Task>querySnapshot=await taskCollection.get();
     tasksList= querySnapshot.docs.map((doc) {
       return doc.data();
     } ).toList();
+
+    //filter list (selectDay)
+    tasksList=tasksList.where((task) {
+      if(task.dateTime?.day==selectDay.day&&
+         task.dateTime?.month==selectDay.month&&
+         task.dateTime?.year==selectDay.year){
+        return true;
+      }
+      return false;
+    }).toList();
+
+    notifyListeners();
+  }
+
+  void changeDate(DateTime newDate){
+    selectDay=newDate;
     notifyListeners();
   }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/FirebaseUtils.dart';
 import 'package:todo_app/Models/Task.dart';
+import 'package:todo_app/Providers/ListProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class TaskDetailsWidget extends StatelessWidget {
@@ -8,6 +11,7 @@ class TaskDetailsWidget extends StatelessWidget {
   TaskDetailsWidget({required this.task});
   @override
   Widget build(BuildContext context) {
+    var provider=Provider.of<ListProvider>(context);
     var size=MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(
@@ -24,7 +28,11 @@ class TaskDetailsWidget extends StatelessWidget {
           extentRatio: 0.2,
             motion: const StretchMotion(),
             children: [
-              SlidableAction(onPressed: null,
+              SlidableAction(
+                onPressed: (context){
+                  FirebaseUtils.deleteTask(task);
+                  provider.refreshTasks();
+                },
               backgroundColor: MyTheme.redColor,
               foregroundColor: Colors.white,
               icon: Icons.delete,
