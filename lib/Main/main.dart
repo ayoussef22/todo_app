@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/Authentication/Login/LoginScreen.dart';
+import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
@@ -27,8 +29,10 @@ class MyApp extends StatelessWidget{
 
       routes: {
         HomeScreen.routeName:(context)=>HomeScreen(),
+        LoginScreen.routeName:(context)=>LoginScreen(),
+        RegisterScreen.routeName:(context)=>RegisterScreen(),
       },
-      initialRoute:HomeScreen.routeName ,
+      initialRoute:RegisterScreen.routeName ,
       theme: MyTheme.lightTheme,
     );
   }
