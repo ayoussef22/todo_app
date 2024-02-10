@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/FirebaseUtils.dart';
+import 'package:todo_app/Utils/FirebaseUtils.dart';
 import 'package:todo_app/Models/Task.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
+import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class TaskDetailsWidget extends StatelessWidget {
@@ -12,6 +13,7 @@ class TaskDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<ListProvider>(context);
+    var authProvider=Provider.of<userAuthProvider>(context);
     var size=MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(
@@ -30,8 +32,8 @@ class TaskDetailsWidget extends StatelessWidget {
             children: [
               SlidableAction(
                 onPressed: (context){
-                  FirebaseUtils.deleteTask(task);
-                  provider.refreshTasks();
+                  FirebaseUtils.deleteTask(task,authProvider.currentUser!.id!);
+                  provider.refreshTasks(authProvider.currentUser!.id!);
                 },
               backgroundColor: MyTheme.redColor,
               foregroundColor: Colors.white,

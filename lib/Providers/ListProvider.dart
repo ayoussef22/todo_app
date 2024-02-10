@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/FirebaseUtils.dart';
+import 'package:todo_app/Utils/FirebaseUtils.dart';
 import 'package:todo_app/Models/Task.dart';
 
 class ListProvider extends ChangeNotifier{
   List<Task> tasksList=[];
   DateTime selectDay=DateTime.now();
 
-  void refreshTasks()async{
-    var taskCollection=FirebaseUtils.getTaskCollection()
+  void refreshTasks(String uId)async{
+    var taskCollection=FirebaseUtils.getTaskCollection(uId)
         .orderBy("dateTime");
     QuerySnapshot<Task>querySnapshot=await taskCollection.get();
     tasksList= querySnapshot.docs.map((doc) {

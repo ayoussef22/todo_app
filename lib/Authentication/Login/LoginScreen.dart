@@ -1,13 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/Authentication/CustomTextFormField.dart';
-import 'package:todo_app/Authentication/Login/LoginScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/Authentication/components/CustomTextFormField.dart';
 import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
+import 'package:todo_app/Utils/DialogUtils.dart';
+import 'package:todo_app/Utils/FirebaseUtils.dart';
+import 'package:todo_app/Home/HomeScreen.dart';
+import 'package:todo_app/Providers/userAuthProvider.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static const String routeName='login';
-  var emailController=TextEditingController();
-  var passwordController=TextEditingController();
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  var emailController=TextEditingController(text: 'abdallahadel@yaho.com');
+
+  var passwordController=TextEditingController(text: '123456');
+
   var formKey=GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
@@ -67,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(10),
                             child:
                             ElevatedButton(
-                                onPressed: register,
+                                onPressed: login,
                                 style: ButtonStyle(
                                     padding: MaterialStateProperty.all(EdgeInsets.all(10)),
                                     backgroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor),
@@ -104,9 +118,45 @@ class LoginScreen extends StatelessWidget {
     );
 
   }
-  void register(){
+
+  void login()async{
     if(formKey.currentState!.validate()== true){
-      // register to firebase auth
+      // login
+      //todo: show loading
+      DialogUtils.showLoading(context);
+      try {
+        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text
+        );
+       var user= await FirebaseUtils.readUserFromFireStore(credential.user!.uid);
+
+        //todo: hide loading
+        DialogUtils.hideLoading(context);
+
+        //todo: show success message
+        DialogUtils.showMessage(context,'login successfully',
+
+          posActionName: 'ok',title: 'Success',
+          posAction: (){
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+          }
+        );
+        var provider=Provider.of<userAuthProvider>(context,listen: false);
+        provider.changeUser(user!);
+
+      } on FirebaseAuthException catch (e) {
+        print(e);
+        DialogUtils.hideLoading(context);
+        if (e.code == 'user-not-found' ||
+            e.code == 'wrong-password' ||
+            e.code == 'firebase_auth' ||
+            e.code == 'invalid-credential'
+        ) {
+          //todo: show error message
+          DialogUtils.showMessage(context, 'Wrong Password or Email',title: 'Error',posActionName: 'ok' );
+        }
+      }
     }
   }
 }

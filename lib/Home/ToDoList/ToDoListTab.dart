@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Home/ToDoList/TaskDetailsWidget.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
+import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class ToDoListTab extends StatefulWidget {
@@ -15,7 +16,9 @@ class _ToDoListTabState extends State<ToDoListTab> {
   @override
   Widget build(BuildContext context) {
     var provider=Provider.of<ListProvider>(context);
-      provider.refreshTasks();
+    var authProvider=Provider.of<userAuthProvider>(context);
+
+      provider.refreshTasks(authProvider.currentUser!.id!);
     return Column(
       children: [
         CalendarTimeline(

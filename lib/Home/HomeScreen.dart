@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/Authentication/Login/LoginScreen.dart';
 import 'package:todo_app/Home/Settings/SettingsTab.dart';
 import 'package:todo_app/Home/ToDoList/AddTaskBottomSheet.dart';
 import 'package:todo_app/Home/ToDoList/ToDoListTab.dart';
+import 'package:todo_app/Providers/ListProvider.dart';
+import 'package:todo_app/Providers/userAuthProvider.dart';
 
 class HomeScreen extends StatefulWidget {
 static const String routeName='home';
@@ -15,10 +19,25 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex=0;
   @override
   Widget build(BuildContext context) {
+    var authProvider=Provider.of<userAuthProvider>(context);
+    var listProvider=Provider.of<ListProvider>(context);
+
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text('ToDo List')),
+        appBar: AppBar(
+            title:Text('ToDo List ${authProvider.currentUser?.name}'),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                listProvider.selectDay=DateTime.now();
+                  },
+                  icon: Icon(Icons.login_outlined))
+            ],
+          automaticallyImplyLeading: false,
+
+        ),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           notchMargin: 6,
