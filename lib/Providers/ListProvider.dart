@@ -31,9 +31,9 @@ class ListProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void changeDate(DateTime newDate){
+  void changeDate(DateTime newDate,String uId){
     selectDay=newDate;
-    notifyListeners();
+    refreshTasks(uId);
   }
 
 }

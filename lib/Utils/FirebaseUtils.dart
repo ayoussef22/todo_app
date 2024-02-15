@@ -22,11 +22,7 @@ class FirebaseUtils {
     return getTaskCollection(uId).doc(task.id).delete();
   }
 
-  static Future<void> updateTaskStatus(Task task, String uId) {
-    return getTaskCollection(uId)
-        .doc(task.id)
-        .update({'isDone': !task.isDone!});
-  }
+
 
   static Future<void> updateTask(Task task, String uId) {
     return getTaskCollection(uId).doc(task.id).update(task.toFireStore());
@@ -53,5 +49,12 @@ class FirebaseUtils {
 
   static Future<void> userSignOut(String uId) async {
     return await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<void> updateTaskStatus(String uId,Task task)async{
+     getTaskCollection(uId).doc(task.id).update({
+      'isDone': !task.isDone!
+    });
+
   }
 }

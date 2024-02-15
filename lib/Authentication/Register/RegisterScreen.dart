@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var size=MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+
         body: Stack(
           children: [
             Image.asset('assets/images/sign_in_bg.png',

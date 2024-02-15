@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/Authentication/components/EditTextFormField.dart';
+import 'package:todo_app/Home/ToDoList/TaskTextFeildComponents/EditTextFormField.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
 import 'package:todo_app/Models/Task.dart';
 import 'package:todo_app/Providers/userAuthProvider.dart';
+import 'package:todo_app/Theming/MyTheme.dart';
 import 'package:todo_app/Utils/FirebaseUtils.dart';
 
 class TaskEditScreen extends StatelessWidget {
@@ -15,7 +16,6 @@ class TaskEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var arg = ModalRoute.of(context)!.settings.arguments as Task;
     var authProvider = Provider.of<userAuthProvider>(context);
-
     return SafeArea(
       child: Scaffold(
         //backgroundColor: Colors.white,
@@ -24,7 +24,6 @@ class TaskEditScreen extends StatelessWidget {
           title: Text(arg.title ?? ''),
         ),
         body: Card(
-          elevation: 20,
           margin: const EdgeInsets.all(30),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20)
@@ -36,7 +35,9 @@ class TaskEditScreen extends StatelessWidget {
               children: [
                 Text(
                   'Edit Your Task',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style:
+                  Theme.of(context).textTheme.titleLarge,
+
                   textAlign: TextAlign.center,
                 ),
                 const Spacer(flex: 2,),
@@ -46,6 +47,7 @@ class TaskEditScreen extends StatelessWidget {
                     arg.title = text;
                   },
                   intialValue: arg.title,
+
                 ),
                 const Spacer(flex: 2),
                 EditTextFormField(
@@ -54,6 +56,7 @@ class TaskEditScreen extends StatelessWidget {
                     arg.description = text;
                   },
                   intialValue: arg.description,
+
                 ),
                 const Spacer(flex: 2),
                 ElevatedButton(

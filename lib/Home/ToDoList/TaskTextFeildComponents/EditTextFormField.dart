@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Theming/MyTheme.dart';
 
 class EditTextFormField extends StatelessWidget {
 String label;
 String? intialValue;
 void Function(String)? onChange;
-EditTextFormField({required this.label, required this.onChange,this.intialValue});
+int? maxLines;
+EditTextFormField({required this.label, required this.onChange,this.intialValue,this.maxLines});
   @override
   Widget build(BuildContext context) {
     return  TextFormField(
       initialValue: intialValue,
+      style: TextStyle(
+        color: MyTheme.darkPrimaryColor
+      ),
       onChanged:onChange,
       decoration: InputDecoration(
         label: Text(label),
@@ -21,6 +26,7 @@ EditTextFormField({required this.label, required this.onChange,this.intialValue}
             borderSide: BorderSide(width: 2,color: Colors.black)
         ),
       ),
+      maxLines: maxLines,
     );
   }
 }

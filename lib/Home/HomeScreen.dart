@@ -48,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
           bottomNavigationBar: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             notchMargin: 6,
+            //color:appProvider.appTheme==ThemeMode.light?Colors.white:
+           // Color(0xff85929E ),
+
+
             child: BottomNavigationBar(
               onTap: (index){
                 setState(() {
@@ -92,7 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
         FirebaseUtils.userSignOut(authProvider.currentUser!.id!)
             .then((value) {
          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-            listProvider.selectDay=DateTime.now();}
+            listProvider.selectDay=DateTime.now();
+            listProvider.tasksList=[];
+            authProvider.currentUser=null;}
         );
       },
       negActionName: 'No',

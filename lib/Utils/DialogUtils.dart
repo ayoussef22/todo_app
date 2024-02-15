@@ -6,12 +6,13 @@ class DialogUtils{
      barrierDismissible: false,
        context: context,
        builder: (context){
-     return AlertDialog(
+     return const AlertDialog(
+
        content: Row(
          children: [
            CircularProgressIndicator(),
            Padding(
-             padding: const EdgeInsets.only(left: 13),
+             padding: EdgeInsets.only(left: 13),
              child: Text('Loading ...'),
            )
          ],
@@ -31,8 +32,7 @@ class DialogUtils{
        VoidCallback? posAction,
        String? negActionName,
        VoidCallback? negAction
-     })async{
-
+     }){
    List<Widget>actions=[];
 
    if(posActionName != null){

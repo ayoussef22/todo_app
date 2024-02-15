@@ -17,8 +17,9 @@ class _ToDoListTabState extends State<ToDoListTab> {
   Widget build(BuildContext context) {
     var listProvider=Provider.of<ListProvider>(context);
     var authProvider=Provider.of<userAuthProvider>(context);
+    if(listProvider.tasksList.isEmpty) {
       listProvider.refreshTasks(authProvider.currentUser!.id!);
-
+    }
     return Column(
       children: [
         CalendarTimeline(
@@ -26,7 +27,7 @@ class _ToDoListTabState extends State<ToDoListTab> {
           firstDate: DateTime.now().subtract(const Duration(days: 90)),
           lastDate: DateTime.now().add(const Duration(days: 365)),
           onDateSelected: (date) {
-            listProvider.changeDate(date);
+            listProvider.changeDate(date,authProvider.currentUser!.id!);
           },
           leftMargin: 10,
           monthColor: Colors.black,

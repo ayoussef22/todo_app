@@ -69,7 +69,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                 ),),
             ]),
         child: Container(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15)
@@ -81,7 +81,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                 width: size.width*0.01,
                 height: size.height*0.13,
                 decoration: BoxDecoration(
-                    color: widget.task.isDone==true?
+                    color:widget.task.isDone==true?
                     MyTheme.greenColor:
                     Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(15)
@@ -94,10 +94,8 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child:
-                      Text(widget.task.isDone==true?
-                          'Done...':
-                      widget.task.title??'',
-                      style: widget.task.isDone==true?
+                      Text(widget.task.title??'',
+                      style:widget.task.isDone==true?
                       Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: MyTheme.greenColor):
                       Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -107,24 +105,35 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(widget.task.description??'',style: Theme.of(context).textTheme.titleMedium,),
+                      child: Text(widget.task.description??'',
+                        style:
+                        Theme.of(context).textTheme.titleMedium
+                        ),
                     )
                   ],
                 ),
               ),
               InkWell(
                 onTap: (){
-                  FirebaseUtils.updateTaskStatus(widget.task, authProvider.currentUser!.id!);
+                  FirebaseUtils.updateTaskStatus(authProvider.currentUser!.id!,
+                      widget.task);
+                  listProvider.refreshTasks(authProvider.currentUser!.id!);
+                  setState(() {
+
+                  });
                 },
-                child: Container(
+                child:widget.task.isDone==true?
+                    Text('Done...',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: MyTheme.greenColor
+                    ),):
+                Container(
                   padding: EdgeInsets.symmetric(
                     vertical: size.height*0.015,
                     horizontal: size.width*0.05
                   ),
                   decoration: BoxDecoration(
-                    color: widget.task.isDone==true?
-                        MyTheme.greenColor:
-                        Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(20)
                   ),
                   child: const Icon(Icons.check,color: Colors.white,),

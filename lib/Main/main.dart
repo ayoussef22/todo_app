@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Authentication/Login/LoginScreen.dart';
@@ -32,10 +31,11 @@ class MyApp extends StatelessWidget{
         HomeScreen.routeName:(context)=>HomeScreen(),
         LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
-        TaskEditScreen.routeName:(context)=>TaskEditScreen(),
+        TaskEditScreen.routeName:(context)=>const TaskEditScreen(),
       },
-      initialRoute:LoginScreen.routeName ,
+      initialRoute:RegisterScreen.routeName ,
       theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.DarkTheme,
     );
   }
 }
