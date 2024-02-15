@@ -153,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: passwordController.text,
         );
         MyUser myUser=MyUser(
-            id: credential.user?.uid,
+            id: credential.user?.uid??"",
             name: userNameController.text,
             email: emailController.text);
         await FirebaseUtils.addUserToFireStore(myUser);

@@ -106,14 +106,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       DialogUtils.showLoading(context);
       var authProvider=Provider.of<userAuthProvider>(context,listen: false);
       FirebaseUtils.addTasksToFireStore(task,authProvider.currentUser!.id!).then((value) {
+        provider.refreshTasks(authProvider.currentUser!.id!);
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(context,
             title: 'Success',
             'Task Add Successfully',
             posActionName: 'ok',posAction: (){Navigator.pop(context);});
       }
-
-
       );
 
     }

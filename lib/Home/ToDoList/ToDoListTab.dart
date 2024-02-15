@@ -15,18 +15,18 @@ class _ToDoListTabState extends State<ToDoListTab> {
 
   @override
   Widget build(BuildContext context) {
-    var provider=Provider.of<ListProvider>(context);
+    var listProvider=Provider.of<ListProvider>(context);
     var authProvider=Provider.of<userAuthProvider>(context);
+      listProvider.refreshTasks(authProvider.currentUser!.id!);
 
-      provider.refreshTasks(authProvider.currentUser!.id!);
     return Column(
       children: [
         CalendarTimeline(
-          initialDate: provider.selectDay,
+          initialDate: listProvider.selectDay,
           firstDate: DateTime.now().subtract(const Duration(days: 90)),
           lastDate: DateTime.now().add(const Duration(days: 365)),
           onDateSelected: (date) {
-            provider.changeDate(date);
+            listProvider.changeDate(date);
           },
           leftMargin: 10,
           monthColor: Colors.black,
@@ -38,8 +38,8 @@ class _ToDoListTabState extends State<ToDoListTab> {
         ),
         Expanded(
             child: ListView.builder(itemBuilder: (context, index) {
-              return TaskDetailsWidget(task: provider.tasksList[index],);
-            }, itemCount: provider.tasksList.length,)
+              return TaskDetailsWidget(task: listProvider.tasksList[index],);
+            }, itemCount: listProvider.tasksList.length,)
         )
       ],
     );

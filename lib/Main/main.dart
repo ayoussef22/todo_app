@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/Authentication/Login/LoginScreen.dart';
 import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
+import 'package:todo_app/Home/ToDoList/TaskEditScreen.dart';
 import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget{
         HomeScreen.routeName:(context)=>HomeScreen(),
         LoginScreen.routeName:(context)=>LoginScreen(),
         RegisterScreen.routeName:(context)=>RegisterScreen(),
+        TaskEditScreen.routeName:(context)=>TaskEditScreen(),
       },
       initialRoute:LoginScreen.routeName ,
       theme: MyTheme.lightTheme,
