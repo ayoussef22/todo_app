@@ -4,6 +4,7 @@ import 'package:todo_app/Authentication/Login/LoginScreen.dart';
 import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
 import 'package:todo_app/Home/ToDoList/TaskEditScreen.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
@@ -17,6 +18,7 @@ void main()async{
   );
 
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: ((context) => AppConfigProvider())),
     ChangeNotifierProvider(create: (context)=>ListProvider()),
     ChangeNotifierProvider(create: (context)=>userAuthProvider()),
   ],child: MyApp(),));
@@ -24,6 +26,7 @@ void main()async{
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     // TODO: implement build
     return MaterialApp(
 
@@ -33,9 +36,10 @@ class MyApp extends StatelessWidget{
         RegisterScreen.routeName:(context)=>RegisterScreen(),
         TaskEditScreen.routeName:(context)=>const TaskEditScreen(),
       },
-      initialRoute:RegisterScreen.routeName ,
+      initialRoute:LoginScreen.routeName ,
       theme: MyTheme.lightTheme,
-      darkTheme: MyTheme.DarkTheme,
+      darkTheme:MyTheme.darkTheme ,
+      themeMode: appProvider.appTheme,
     );
   }
 }

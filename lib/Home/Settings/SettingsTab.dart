@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Home/Settings/ThemeBottomSheet.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class SettingsTab extends StatefulWidget {
@@ -12,6 +13,8 @@ class SettingsTab extends StatefulWidget {
 class _SettingsTabState extends State<SettingsTab> {
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
+
     var size=MediaQuery.of(context).size;
     return Card(
       elevation: 20,
@@ -36,16 +39,17 @@ class _SettingsTabState extends State<SettingsTab> {
                 margin: EdgeInsets.only(top: size.height*0.04),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color:
-                  Theme.of(context).primaryColor,
+                  color:appProvider.appTheme==ThemeMode.light?
+                  Theme.of(context).primaryColor:
+                      MyTheme.darkPrimaryColor,
                   borderRadius: BorderRadius.circular(20)
 
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                    'Light',
+                    Text(appProvider.appTheme==ThemeMode.light?
+                    'Light':'Dark',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white
                     ),),

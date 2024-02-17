@@ -107,7 +107,9 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(widget.task.description??'',
                         style:
-                        Theme.of(context).textTheme.titleMedium
+                        Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: MyTheme.darkPrimaryColor
+                        )
                         ),
                     )
                   ],

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/Home/ToDoList/TaskTextFeildComponents/EditTextFormField.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
 import 'package:todo_app/Models/Task.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 import 'package:todo_app/Utils/FirebaseUtils.dart';
@@ -16,6 +17,8 @@ class TaskEditScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var arg = ModalRoute.of(context)!.settings.arguments as Task;
     var authProvider = Provider.of<userAuthProvider>(context);
+    var appProvider = Provider.of<AppConfigProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         //backgroundColor: Colors.white,
@@ -25,9 +28,8 @@ class TaskEditScreen extends StatelessWidget {
         ),
         body: Card(
           margin: const EdgeInsets.all(30),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
@@ -35,19 +37,21 @@ class TaskEditScreen extends StatelessWidget {
               children: [
                 Text(
                   'Edit Your Task',
-                  style:
-                  Theme.of(context).textTheme.titleLarge,
-
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: MyTheme.darkPrimaryColor),
                   textAlign: TextAlign.center,
                 ),
-                const Spacer(flex: 2,),
+                const Spacer(
+                  flex: 2,
+                ),
                 EditTextFormField(
                   label: 'Task Title',
                   onChange: (text) {
                     arg.title = text;
                   },
                   intialValue: arg.title,
-
                 ),
                 const Spacer(flex: 2),
                 EditTextFormField(
@@ -56,7 +60,6 @@ class TaskEditScreen extends StatelessWidget {
                     arg.description = text;
                   },
                   intialValue: arg.description,
-
                 ),
                 const Spacer(flex: 2),
                 ElevatedButton(
@@ -66,13 +69,14 @@ class TaskEditScreen extends StatelessWidget {
                       Navigator.pushNamed(context, HomeScreen.routeName);
                     },
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(10)),
                         backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor)),
+                            appProvider.appTheme == ThemeMode.light
+                                ? Theme.of(context).primaryColor
+                                : MyTheme.darkPrimaryColor)),
                     child: Text(
                       'Save Changes',
                       style: Theme.of(context)
@@ -80,7 +84,9 @@ class TaskEditScreen extends StatelessWidget {
                           .titleMedium
                           ?.copyWith(color: Colors.white),
                     )),
-                const Spacer(flex: 4,)
+                const Spacer(
+                  flex: 4,
+                )
               ],
             ),
           ),

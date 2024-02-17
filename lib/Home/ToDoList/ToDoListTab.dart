@@ -2,6 +2,7 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Home/ToDoList/TaskDetailsWidget.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Providers/ListProvider.dart';
 import 'package:todo_app/Providers/userAuthProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
@@ -15,11 +16,12 @@ class _ToDoListTabState extends State<ToDoListTab> {
 
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     var listProvider=Provider.of<ListProvider>(context);
     var authProvider=Provider.of<userAuthProvider>(context);
-    if(listProvider.tasksList.isEmpty) {
+
       listProvider.refreshTasks(authProvider.currentUser!.id!);
-    }
+
     return Column(
       children: [
         CalendarTimeline(
@@ -30,11 +32,19 @@ class _ToDoListTabState extends State<ToDoListTab> {
             listProvider.changeDate(date,authProvider.currentUser!.id!);
           },
           leftMargin: 10,
-          monthColor: Colors.black,
-          dayColor: Colors.black,
-          activeDayColor: Colors.white,
-          activeBackgroundDayColor: MyTheme.primaryColor,
-          dotsColor: Colors.white,
+          monthColor:appProvider.appTheme==ThemeMode.light?
+          MyTheme.darkPrimaryColor:Colors.white,
+          dayColor:appProvider.appTheme==ThemeMode.light?
+          MyTheme.darkPrimaryColor:Colors.white,
+          activeDayColor:appProvider.appTheme==ThemeMode.light?
+          Colors.white:
+          MyTheme.darkPrimaryColor,
+          activeBackgroundDayColor:appProvider.appTheme==ThemeMode.light?
+          MyTheme.primaryColor:
+          Colors.white,
+          dotsColor: appProvider.appTheme==ThemeMode.light?
+          Colors.white:
+          MyTheme.darkPrimaryColor,
           locale: 'en_ISO',
         ),
         Expanded(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Home/ToDoList/TaskTextFeildComponents/BottomSheetTextFeild.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 import 'package:todo_app/Utils/DialogUtils.dart';
 import 'package:todo_app/Utils/FirebaseUtils.dart';
@@ -24,12 +25,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   var formkey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     provider=Provider.of<ListProvider>(context);
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(15),
-        color:
-        Colors.white
+        color:appProvider.appTheme==ThemeMode.light?
+        Colors.white:
+            MyTheme.darkPrimaryColor
        ,
         child: Column(
           children: [

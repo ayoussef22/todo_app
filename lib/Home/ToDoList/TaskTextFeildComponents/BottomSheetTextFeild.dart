@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class BottomSheetTextField extends StatelessWidget {
@@ -9,10 +11,12 @@ class BottomSheetTextField extends StatelessWidget {
   BottomSheetTextField({required this.onChanged,required this.validation,this.hintText,this.maxLines});
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     return TextFormField(
       style: TextStyle(
-        color:
-        MyTheme.darkPrimaryColor
+        color:appProvider.appTheme==ThemeMode.light?
+        MyTheme.darkPrimaryColor:
+            Colors.white
        ,
       ),
       onChanged:onChanged ,
@@ -23,13 +27,13 @@ class BottomSheetTextField extends StatelessWidget {
               borderSide: BorderSide(
                   color:
                   MyTheme.greyColor
-
               )
           ),
           hintText: hintText,
           hintStyle: TextStyle(color:
-
-          MyTheme.darkPrimaryColor
+          appProvider.appTheme==ThemeMode.light?
+          MyTheme.darkPrimaryColor:
+              Colors.white
           )
       ),
       maxLines: maxLines,

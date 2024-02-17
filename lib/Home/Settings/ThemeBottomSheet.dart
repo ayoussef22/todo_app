@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
 import 'package:todo_app/Theming/MyTheme.dart';
 
 class ThemeBottomSheet extends StatefulWidget {
@@ -11,9 +13,12 @@ class ThemeBottomSheet extends StatefulWidget {
 class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     var size=MediaQuery.of(context).size;
     return Container(
-      color: Colors.white,
+      color:appProvider.appTheme==ThemeMode.light?
+      Colors.white:
+      MyTheme.darkPrimaryColor,
       padding: EdgeInsets.symmetric(
         vertical: size.height *0.05,
         horizontal: size.width *0.04
@@ -23,21 +28,24 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
         children: [
           InkWell(
             onTap: (){
-
+              appProvider.changeAppTheme(ThemeMode.light);
               Navigator.pop(context);
             },
-            child:
-            selectedThemeWidget('Light')
+            child:appProvider.appTheme==ThemeMode.light?
+            selectedThemeWidget('Light'):
+            unSelectedThemeWidget('Light')
 
           ),
           SizedBox(height: 30,),
           InkWell(
             onTap: (){
-
+              appProvider.changeAppTheme(ThemeMode.dark);
               Navigator.pop(context);
             },
 
-               child: selectedThemeWidget('Dark')
+               child: appProvider.appTheme==ThemeMode.dark?
+               selectedThemeWidget('Dark'):
+               unSelectedThemeWidget('Dark')
 
           ),
 

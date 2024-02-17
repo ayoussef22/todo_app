@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/Authentication/components/CustomTextFormField.dart';
 import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
 import 'package:todo_app/Exit%20Function/ExitApp.dart';
-import 'package:todo_app/Providers/ListProvider.dart';
-import 'package:todo_app/Theming/MyTheme.dart';
 import 'package:todo_app/Utils/DialogUtils.dart';
 import 'package:todo_app/Utils/FirebaseUtils.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
@@ -38,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-
+           // backgroundColor: Colors.white,
             body: Stack(
               children: [
                 Image.asset('assets/images/sign_in_bg.png',

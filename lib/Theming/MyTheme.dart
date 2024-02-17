@@ -29,7 +29,7 @@ class MyTheme{
      backgroundColor: primaryColor,
      foregroundColor: Colors.white,
    ),
-   textTheme: const TextTheme(
+   textTheme:  TextTheme(
      titleLarge: TextStyle(
          fontWeight: FontWeight.bold,fontSize: 22
      ),
@@ -43,7 +43,7 @@ class MyTheme{
 
 
   );
- static ThemeData DarkTheme=ThemeData(
+ static ThemeData darkTheme=ThemeData(
    useMaterial3: false,
    primaryColor: primaryColor,
    appBarTheme: AppBarTheme(
@@ -55,13 +55,13 @@ class MyTheme{
    ),
    scaffoldBackgroundColor: darkPrimaryColor,
    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-     selectedItemColor: primaryColor,
-     unselectedItemColor: Colors.white,
+     selectedItemColor: darkPrimaryColor,
+     unselectedItemColor: greyColor,
      backgroundColor: Colors.transparent,
      elevation: 0,
    ),
    floatingActionButtonTheme: FloatingActionButtonThemeData(
-     backgroundColor: primaryColor,
+     backgroundColor: darkPrimaryColor,
      foregroundColor: Colors.white,
    ),
    textTheme:  TextTheme(

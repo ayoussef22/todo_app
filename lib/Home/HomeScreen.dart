@@ -97,8 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .then((value) {
          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
             listProvider.selectDay=DateTime.now();
-            listProvider.tasksList=[];
-            authProvider.currentUser=null;}
+           }
         );
       },
       negActionName: 'No',
