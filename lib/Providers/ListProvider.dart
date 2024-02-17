@@ -4,8 +4,10 @@ import 'package:todo_app/Utils/FirebaseUtils.dart';
 import 'package:todo_app/Models/Task.dart';
 
 class ListProvider extends ChangeNotifier{
+  Task? task;
   List<Task> tasksList=[];
   DateTime selectDay=DateTime.now();
+
 
   void refreshTasks(String uId)async{
     var taskCollection=FirebaseUtils.getTaskCollection(uId)
@@ -16,6 +18,7 @@ class ListProvider extends ChangeNotifier{
     } ).toList();
 
     //filter list (selectDay)
+    
     tasksList=tasksList.where((task) {
       if(task.dateTime?.day==selectDay.day&&
          task.dateTime?.month==selectDay.month&&
@@ -28,9 +31,9 @@ class ListProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void changeDate(DateTime newDate){
+  void changeDate(DateTime newDate,String uId){
     selectDay=newDate;
-    notifyListeners();
+    refreshTasks(uId);
   }
 
 }

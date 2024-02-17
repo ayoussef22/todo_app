@@ -17,13 +17,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  var userNameController=TextEditingController(text: 'abdallah adel');
+  var userNameController=TextEditingController();
 
-  var emailController=TextEditingController(text: 'abdallahadel@yaho.com');
+  var emailController=TextEditingController();
 
-  var passwordController=TextEditingController(text: '123456');
+  var passwordController=TextEditingController();
 
-  var confirmPasswordController=TextEditingController(text: '123456');
+  var confirmPasswordController=TextEditingController();
 
   var formKey=GlobalKey<FormState>();
 
@@ -32,8 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var size=MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
+          body: Stack(
           children: [
             Image.asset('assets/images/sign_in_bg.png',
             width: double.infinity,
@@ -153,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: passwordController.text,
         );
         MyUser myUser=MyUser(
-            id: credential.user?.uid,
+            id: credential.user?.uid??"",
             name: userNameController.text,
             email: emailController.text);
         await FirebaseUtils.addUserToFireStore(myUser);

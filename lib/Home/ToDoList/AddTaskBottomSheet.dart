@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/Home/ToDoList/TaskTextFeildComponents/BottomSheetTextFeild.dart';
+import 'package:todo_app/Providers/AppConfigProvider.dart';
+import 'package:todo_app/Theming/MyTheme.dart';
 import 'package:todo_app/Utils/DialogUtils.dart';
 import 'package:todo_app/Utils/FirebaseUtils.dart';
 import 'package:todo_app/Models/Task.dart';
@@ -22,10 +25,15 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   var formkey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var appProvider=Provider.of<AppConfigProvider>(context);
     provider=Provider.of<ListProvider>(context);
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(15),
+        color:appProvider.appTheme==ThemeMode.light?
+        Colors.white:
+            MyTheme.darkPrimaryColor
+       ,
         child: Column(
           children: [
             Text('Add Your Task',
@@ -37,39 +45,38 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: TextFormField(
-                    onChanged: (text){
+                  child:BottomSheetTextField(
+                    onChanged:(text){
                       title=text;
-                    },
-
-                    validator: (text){
+                    } ,
+                    validation:(text){
                       if(text==null || text.isEmpty){
                         return 'Please Enter Your Task Title';
                       }
                       return null;
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your Task Title'
-                    ),
-                  ),
+                    } ,
+                    hintText:'Enter your Task Title' ,
+                    maxLines: 1,
+
+                  ) ,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12),
-                  child: TextFormField(
-                    onChanged: (text){
+                  child: BottomSheetTextField(
+                    onChanged:(text){
                       description=text;
-                    },
-                    validator: (text){
-                      if (text==null || text.isEmpty){
+                    } ,
+                    validation:(text){
+                      if(text==null || text.isEmpty){
                         return 'Please Enter Your Task Description';
                       }
                       return null;
-                    },
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your Task Description'
-                    ),
+                    } ,
+                   hintText:'Enter your Task Description' ,
                     maxLines: 4,
-                  ),
+
+
+                  )
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15),
@@ -106,14 +113,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       DialogUtils.showLoading(context);
       var authProvider=Provider.of<userAuthProvider>(context,listen: false);
       FirebaseUtils.addTasksToFireStore(task,authProvider.currentUser!.id!).then((value) {
+        provider.refreshTasks(authProvider.currentUser!.id!);
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(context,
             title: 'Success',
             'Task Add Successfully',
             posActionName: 'ok',posAction: (){Navigator.pop(context);});
       }
-
-
       );
 
     }
