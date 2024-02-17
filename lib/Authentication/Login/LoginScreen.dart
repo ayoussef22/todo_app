@@ -17,9 +17,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var emailController=TextEditingController(text: 'abdallahadel@yaho.com');
+  var emailController=TextEditingController();
 
-  var passwordController=TextEditingController(text: '123456');
+  var passwordController=TextEditingController();
 
   var formKey=GlobalKey<FormState>();
 

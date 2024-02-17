@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/Authentication/Login/LoginScreen.dart';
 import 'package:todo_app/Authentication/Register/RegisterScreen.dart';
 import 'package:todo_app/Home/HomeScreen.dart';
@@ -13,21 +14,23 @@ import '../firebase_options.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: ((context) => AppConfigProvider())),
     ChangeNotifierProvider(create: (context)=>ListProvider()),
     ChangeNotifierProvider(create: (context)=>userAuthProvider()),
   ],child: MyApp(),));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 class MyApp extends StatelessWidget{
+  late AppConfigProvider appProvider;
   @override
   Widget build(BuildContext context) {
-    var appProvider=Provider.of<AppConfigProvider>(context);
-    // TODO: implement build
+     appProvider=Provider.of<AppConfigProvider>(context);
+     initSharedPref();
     return MaterialApp(
 
       routes: {
@@ -41,5 +44,14 @@ class MyApp extends StatelessWidget{
       darkTheme:MyTheme.darkTheme ,
       themeMode: appProvider.appTheme,
     );
+  }
+  void initSharedPref()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tempTheme=prefs.getString('theme')??'light';
+    if(tempTheme=='light'){
+      appProvider.changeAppTheme(ThemeMode.light);
+    }else{
+      appProvider.changeAppTheme(ThemeMode.dark);
+    }
   }
 }
