@@ -42,9 +42,8 @@ class _ToDoListTabState extends State<ToDoListTab> {
           activeBackgroundDayColor:appProvider.appTheme==ThemeMode.light?
           MyTheme.primaryColor:
           Colors.white,
-          dotsColor: appProvider.appTheme==ThemeMode.light?
-          Colors.white:
-          MyTheme.darkPrimaryColor,
+
+
           locale: 'en_ISO',
         ),
         Expanded(
