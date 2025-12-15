@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_native_splash: ^2.3.9
+  flutter_native_splash: ^2.4.6
   calendar_timeline: ^1.1.2
   flutter_slidable: ^3.0.1
 
